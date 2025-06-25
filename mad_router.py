@@ -14,6 +14,7 @@ def apply_packet_changes(pkt: Packet, forward_iface: str) -> None:
     # layer 3 changes
     if pkt.haslayer(IP):
         pkt[IP].ttl -= 1
+        pkt[IP].src = get_if_addr(forward_iface)
 
 
 def forward_packet(peers: Dict[str, str], pkt: Packet, verbose: bool = False) -> None:
