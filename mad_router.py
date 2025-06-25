@@ -3,6 +3,7 @@ from typing import Dict, Tuple
 from scapy.all import *
 
 SOME_MAC = "aa:aa:aa:aa:aa:aa"
+SOME_IP = "1.1.1.1"
 
 
 def apply_packet_changes(pkt: Packet, forward_iface: str) -> None:
@@ -15,6 +16,7 @@ def apply_packet_changes(pkt: Packet, forward_iface: str) -> None:
     if pkt.haslayer(IP):
         pkt[IP].ttl -= 1
         pkt[IP].src = get_if_addr(forward_iface)
+        pkt[IP].dst = SOME_IP
 
 
 def forward_packet(peers: Dict[str, str], pkt: Packet, verbose: bool = False) -> None:
